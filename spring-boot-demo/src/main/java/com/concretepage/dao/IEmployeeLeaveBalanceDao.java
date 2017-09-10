@@ -16,5 +16,7 @@ public interface IEmployeeLeaveBalanceDao {
 	
 	int incrementLeaveBalance(Integer employeeId, Integer year, String leaveType, Integer noOfDayPendingApproval, Integer noofDayEligible);
 	
+	public int incrementLeaveBalanceForAllEmployees( Integer year, String leaveType, Integer noofDayEligible);
+	
 	
 }

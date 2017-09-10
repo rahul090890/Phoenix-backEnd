@@ -4,7 +4,10 @@ import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,7 @@ import com.concretepage.utils.DateUtils;
 public class EmployeeService implements IEmployeeService {
 	
 	private final String DEFAULT_PASSWORD = "Phe0nix@HYD"; 
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private IEmployeeDAO dao;
@@ -68,6 +72,7 @@ public class EmployeeService implements IEmployeeService {
 			throw new HRException("Unable to find leave master for the role " + employee.getRole().getRoleName() + " for the employee " + employee.getLoginId());
 		}
 		for(LeaveMaster l :  leaveMasters) {
+			log.info("Adding leave balance for the employee " + employee.getEmployeeCode() + l.toString() );
 			leaveBalanceDao.insertLeaveBalance(employee.getEmployeeId(), DateUtils.getCurrentYear(), l.getLeaveType(), 0, 
 					calculateProratedLeaveEligibility(employee.getDateOfJoin(),l.getAnnualEligibility())
 					);
@@ -76,12 +81,17 @@ public class EmployeeService implements IEmployeeService {
 	
 	private Integer calculateProratedLeaveEligibility(String doj, Integer annualEligibility) {
 		Calendar lastDayOftheYear = Calendar.getInstance();
-		lastDayOftheYear.set(DateUtils.getCurrentYear(),12,31,0,0);
+		//lastDayOftheYear.set(DateUtils.getCurrentYear(),12,30,0,0);
+		lastDayOftheYear.set(Calendar.YEAR,DateUtils.getCurrentYear());
+		lastDayOftheYear.set(Calendar.MONTH, 12);
+		lastDayOftheYear.set(Calendar.DAY_OF_MONTH, 31);
+		
 		
 		Date dateOfJoin = DateUtils.String_YYYY_MM_DD_ToDate(doj);
-		long remainingDays = ChronoUnit.DAYS.between(lastDayOftheYear.getTime().toInstant(), dateOfJoin.toInstant());
+		System.out.println(lastDayOftheYear.toString());
 		
-		return (int)Math.round((((annualEligibility)/365)*remainingDays));
+		int remainingDays = (int) TimeUnit.DAYS.convert((lastDayOftheYear.getTimeInMillis() - dateOfJoin.getTime()),TimeUnit.MILLISECONDS);
+		return (int)Math.round((annualEligibility)*remainingDays)/365;
 		
 	}
 

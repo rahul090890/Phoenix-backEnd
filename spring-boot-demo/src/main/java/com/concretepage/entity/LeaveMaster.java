@@ -76,6 +76,12 @@ public class LeaveMaster implements Serializable {
 	public void setAnnualEligibility(Integer annualEligibility) {
 		this.annualEligibility = annualEligibility;
 	}
+
+	@Override
+	public String toString() {
+		return "LeaveMaster [leaveMasterId=" + leaveMasterId + ", roleId=" + roleId + ", roleName=" + roleName
+				+ ", leaveType=" + leaveType + ", annualEligibility=" + annualEligibility + "]";
+	}
 	
 	
 	

@@ -25,6 +25,7 @@ import com.concretepage.dto.TimesheetDTO;
 import com.concretepage.dto.TimesheetEntryDTO;
 import com.concretepage.entity.Customer;
 import com.concretepage.entity.CustomerProgram;
+import com.concretepage.entity.Department;
 import com.concretepage.entity.Employee;
 import com.concretepage.entity.Project;
 import com.concretepage.entity.Timesheet;
@@ -33,9 +34,9 @@ import com.concretepage.entity.TimesheetSummary;
 import com.concretepage.exception.HRException;
 import com.concretepage.service.ICustomerProgramService;
 import com.concretepage.service.ICustomerService;
+import com.concretepage.service.IDepartmentService;
 import com.concretepage.service.IEmployeeService;
 import com.concretepage.service.IProjectService;
-import com.concretepage.service.ITaskService;
 import com.concretepage.service.ITimesheetService;
 import com.concretepage.utils.DateUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -62,6 +63,9 @@ public class TimesheetController {
 
 	@Autowired
 	private IProjectService projectService;
+	
+	@Autowired
+	private IDepartmentService departmentService;
 	
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -216,8 +220,8 @@ public class TimesheetController {
 		CustomerProgram customerProgram = customerProgramService.getCustomerProgramById(timesheet.getCustomerProgramId());
 		timesheet.setCustomerProgramCode(customerProgram.getCustomerProgramCode());
 		timesheet.setCustomerProgramType(customerProgram.getCustomerProgramType());
-		
-		timesheet.setDepartmentId(Integer.parseInt(entryDTO.getDepartmentId()));
+		Department department = departmentService.getDepartmentById(Integer.parseInt((entryDTO.getDepartmentId())));
+		timesheet.setDepartmentId(department.getParentDepartment().getDepartmentName() + " --> " + department.getDepartmentName());
 		
 		timesheet.setProjectId(Integer.parseInt(entryDTO.getProjectId()));
 		Project project = projectService.findProjectById(timesheet.getProjectId());

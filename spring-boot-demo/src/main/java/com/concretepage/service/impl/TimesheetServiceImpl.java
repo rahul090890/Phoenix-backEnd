@@ -152,7 +152,7 @@ public class TimesheetServiceImpl implements ITimesheetService {
 		dto.setCustomerProgramCode(timesheet.getCustomerProgramCode());
 		dto.setCustomerProgramType(timesheet.getCustomerProgramType());
 		
-		dto.setDepartmentId(timesheet.getDepartmentId() + "");
+		dto.setDepartmentId(timesheet.getDepartmentId());
 				
 		dto.setProjectId(timesheet.getProjectId() + "");
 		dto.setProjectName(timesheet.getProjectName());

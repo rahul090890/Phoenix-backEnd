@@ -66,7 +66,7 @@ public class Timesheet implements Serializable{
 	private String customerProgramType;
 	
 	@Column(name = "departmentId")
-	private Integer departmentId ;
+	private String departmentId ;
 	
 	@Column(name = "projectId")
 	private Integer projectId;
@@ -233,11 +233,11 @@ public class Timesheet implements Serializable{
 		this.customerProgramType = customerProgramType;
 	}
 
-	public Integer getDepartmentId() {
+	public String getDepartmentId() {
 		return departmentId;
 	}
 
-	public void setDepartmentId(Integer departmentId) {
+	public void setDepartmentId(String departmentId) {
 		this.departmentId = departmentId;
 	}
 

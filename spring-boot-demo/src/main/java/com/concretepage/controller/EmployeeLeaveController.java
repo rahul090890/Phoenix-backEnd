@@ -109,5 +109,24 @@ public class EmployeeLeaveController {
 		return new ResponseEntity<EmployeeLeave>(leave, HttpStatus.OK);
 	}
 	
+	/**
+	 * Increments leave available for all employees
+	 * @param leaveType
+	 * @param year
+	 * @param noOfDays
+	 * @return
+	 * @throws HRException
+	 */
+	@PostMapping("creditLeavesAllEmployees/{leaveType}/{year}/{noOfDays}")
+	public ResponseEntity<Void> applyLeave(
+			@PathVariable("leaveType") String leaveType,
+			@PathVariable("year") String year, 
+			@PathVariable("noOfDays") String noOfDays
+			) throws HRException {
+		leaveService.incrementLeaveBalanceForAllEmployees(Integer.parseInt(year),leaveType,Integer.parseInt(noOfDays));
+		
+		return new ResponseEntity<Void>( HttpStatus.OK);
+	}
+	
 
 }

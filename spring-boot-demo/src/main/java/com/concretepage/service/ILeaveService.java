@@ -20,5 +20,7 @@ public interface ILeaveService {
 	
 	List<EmployeeLeaveBalance> getLeaveBalancesForEmployeeAndYear(Integer employeeId , Integer year);
 	
+	public void incrementLeaveBalanceForAllEmployees( Integer year, String leaveType, Integer noofDayEligible);
+	
 
 }

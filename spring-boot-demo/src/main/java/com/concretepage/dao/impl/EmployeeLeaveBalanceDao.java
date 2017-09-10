@@ -93,5 +93,16 @@ public class EmployeeLeaveBalanceDao implements IEmployeeLeaveBalanceDao {
 		
 		return 1;
 	}
+	
+	@Override
+	public int incrementLeaveBalanceForAllEmployees( Integer year, String leaveType, Integer noofDayEligible) {
+		String hql = "update EmployeeLeaveBalance b set b.eligible = eligible + ?  where  b.annualYear = ? and b.leaveType = ?";
+		Query q = entityManager.createQuery(hql);
+		q.setParameter(1, noofDayEligible);
+		q.setParameter(2, year);
+		q.setParameter(3, leaveType);
+		return q.executeUpdate();
+		
+	}
 
 }
