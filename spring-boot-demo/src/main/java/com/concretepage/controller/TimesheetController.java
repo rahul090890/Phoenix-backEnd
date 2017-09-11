@@ -221,7 +221,7 @@ public class TimesheetController {
 		timesheet.setCustomerProgramCode(customerProgram.getCustomerProgramCode());
 		timesheet.setCustomerProgramType(customerProgram.getCustomerProgramType());
 		Department department = departmentService.getDepartmentById(Integer.parseInt((entryDTO.getDepartmentId())));
-		timesheet.setDepartmentId(department.getParentDepartment().getDepartmentName() + " --> " + department.getDepartmentName());
+		timesheet.setDepartmentId(department.getDepartmentCode());
 		
 		timesheet.setProjectId(Integer.parseInt(entryDTO.getProjectId()));
 		Project project = projectService.findProjectById(timesheet.getProjectId());

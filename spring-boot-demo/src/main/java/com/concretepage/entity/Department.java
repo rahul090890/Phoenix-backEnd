@@ -42,6 +42,17 @@ public class Department implements Serializable{
 	@Column(name = "managerId")
 	private Integer manager;
 	
+	@Column(name = "departmentCode")
+	private String departmentCode;
+	
+	public String getDepartmentCode() {
+		return departmentCode;
+	}
+
+	public void setDepartmentCode(String departmentCode) {
+		this.departmentCode = departmentCode;
+	}
+
 	@Column(name = "startDate")
 	private Date startDate;
 	
@@ -112,8 +123,13 @@ public class Department implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Department [departmentId=" + departmentId + ", departmentName=" + departmentName + "]";
+		return "Department [departmentId=" + departmentId + ", departmentName=" + departmentName + ", parentDepartment="
+				+ parentDepartment + ", manager=" + manager + ", departmentCode=" + departmentCode + ", startDate="
+				+ startDate + ", endDate=" + endDate + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime
+				+ "]";
 	}
+
+	
 
 
 }
