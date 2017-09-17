@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.concretepage.dao.ITimesheetDao;
 import com.concretepage.entity.Timesheet;
 import com.concretepage.entity.TimesheetStatus;
+import com.concretepage.utils.HRUtils;
 
 @Transactional
 @Repository
@@ -42,7 +43,9 @@ public class TimesheetDaoImpl implements ITimesheetDao {
 
 	@Override
 	public void createTimesheets(List<Timesheet> timesheets) {
+		long timsheetSequence = HRUtils.createAUniqueId(timesheets.get(0).getEmployeeId()+"");
 		for(Timesheet timesheet : timesheets) {
+			timesheet.setTimesheetSequence(timsheetSequence);
 			log.info("Saving the timesheet for the date" + timesheet.getTimesheetdate() + "for the employee" + timesheet.getEmployeeId());
 			entityManager.persist(timesheet);
 		}
@@ -109,5 +112,13 @@ public class TimesheetDaoImpl implements ITimesheetDao {
 		
 		return isTimesheetAlreadySubmitted;
 	}
+	@Override
+	public List<Timesheet> getTimesheetsBySequence(long timesheetSequence) {
+		String hql = "FROM Timesheet as t where timesheetSequence = ? ";
+		Query query = entityManager.createQuery(hql);
+		query.setParameter(1, timesheetSequence);
+		return (List<Timesheet>)query.getResultList();
+	}
+	
 
 }

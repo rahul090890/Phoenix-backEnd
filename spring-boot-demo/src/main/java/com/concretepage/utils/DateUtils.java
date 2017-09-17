@@ -20,6 +20,11 @@ public class DateUtils {
 		 return sdf.format(today.getTime());
 	}
 	
+	public static long getDateinYYYYMMDD() {
+		 Calendar today = Calendar.getInstance();
+		 return (today.getTimeInMillis());
+	}
+	
 	public static Date startDateOfCurrentMonth() {
 		Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, 1);

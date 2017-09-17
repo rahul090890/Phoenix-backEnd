@@ -118,6 +118,17 @@ public class Timesheet implements Serializable{
 	
 	@Column(name = "updatedTimeStamp")
 	private Date updatedTimeStamp;
+	
+	@Column(name = "timesheetSequence")
+	private long timesheetSequence;
+
+	public long getTimesheetSequence() {
+		return timesheetSequence;
+	}
+
+	public void setTimesheetSequence(long timesheetSequence) {
+		this.timesheetSequence = timesheetSequence;
+	}
 
 	public Integer getTimesheetId() {
 		return timesheetId;

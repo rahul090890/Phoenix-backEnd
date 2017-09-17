@@ -21,5 +21,8 @@ public interface ITimesheetDao {
 	void rejectTimesheet(Integer employeeId, String weekStartDate, String weekEndDate);
 	
 	void deleteTimesheet(Integer employeeId, String weekStartDate, String weekEndDate);
-
+	
+	List<Timesheet> getTimesheetsBySequence(long timesheetSequence);
+	
+	
 }

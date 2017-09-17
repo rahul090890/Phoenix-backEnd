@@ -135,6 +135,16 @@ public class TimesheetController {
 		
 	}
 	
+	@GetMapping("detailsBySequence/{timesheetSequence}")
+	public ResponseEntity<TimesheetDTO> getTimesheetDetails(
+			@PathVariable("timesheetSequence") String timesheetSequence
+			) {
+		TimesheetDTO dto = timesheetService.getTimesheetDetails(Long.parseLong(timesheetSequence));
+		return new ResponseEntity<TimesheetDTO>(dto,HttpStatus.OK);
+		
+	}
+	
+	
 	@GetMapping("timesheetsToApprove/{managerId}")
 	public ResponseEntity<List<TimesheetSummary>> getTimesheetsToApprove(
 			@PathVariable("managerId") String managerId

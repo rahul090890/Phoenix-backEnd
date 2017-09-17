@@ -21,28 +21,28 @@ public class TimesheetSummaryDao implements ITimesheetSummaryDao {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-	
+
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
-	
+
 	@Override
 	public List<TimesheetSummary> getTimesheetSummary(Integer employeeId, String startDate, String endDate) {
 		String hql = "from TimesheetSummary as s where s.id.employeeId = ? and str_to_date(s.id.weekStartDate, '%Y-%m-%d') >= str_to_date( ? ,'%Y-%m-%d')  and str_to_date(s.id.weekStartDate, '%Y-%m-%d') < str_to_date( ? ,'%Y-%m-%d') ";
 		Query query = entityManager.createQuery(hql);
 		query.setParameter(1, employeeId);
-		query.setParameter(2,startDate );
+		query.setParameter(2, startDate);
 		query.setParameter(3, endDate);
-		
-		return (List<TimesheetSummary>)query.getResultList();
+
+		return (List<TimesheetSummary>) query.getResultList();
 	}
 
 	@Override
 	public List<TimesheetSummary> getPendingTimesheetSummary(List<Integer> employeeIds) {
-		String hql = "from TimesheetSummary as s where s.id.employeeId IN :employeeList and  s.timesheetStatus = :timesheetStatus order by s.id.employeeId " ;
+		String hql = "from TimesheetSummary as s where s.id.employeeId IN :employeeList and  s.id.timesheetStatus = :timesheetStatus order by s.id.employeeId ";
 		Query query = entityManager.createQuery(hql);
 		query.setParameter("employeeList", employeeIds);
 		query.setParameter("timesheetStatus", TimesheetStatus.DRAFT.name());
-		
-		return (List<TimesheetSummary>)query.getResultList();
+
+		return (List<TimesheetSummary>) query.getResultList();
 	}
 
 }

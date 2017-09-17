@@ -22,5 +22,7 @@ public interface ITimesheetService {
 	void approveTimesheet(Integer employeeId, String weekStartDate, String weekEndDate);
 	
 	void rejectTimesheet(Integer employeeId, String weekStartDate, String weekEndDate);
+	
+	TimesheetDTO getTimesheetDetails(long timesheetSequence);
 
 }

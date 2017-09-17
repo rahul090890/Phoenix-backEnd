@@ -170,4 +170,9 @@ public class TimesheetServiceImpl implements ITimesheetService {
 		return dto;
 	}
 
+	@Override
+	public TimesheetDTO getTimesheetDetails(long timesheetSequence) {
+		return createTimesheetDTO(timesheetDao.getTimesheetsBySequence(timesheetSequence));
+	}
+
 }
